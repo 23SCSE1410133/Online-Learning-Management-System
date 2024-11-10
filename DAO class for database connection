@@ -1,0 +1,63 @@
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class DatabaseConnectionDAO {
+
+    // Database URL, username, and password
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/your_database_name";
+    private static final String USER = "your_username";
+    private static final String PASS = "your_password";
+    private static Connection connection = null;
+
+    // Method to get a database connection
+    public static Connection getConnection() throws SQLException {
+        if (connection == null || connection.isClosed()) {
+            try {
+                // Register JDBC driver (optional for some drivers)
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                // Establish connection
+                connection = DriverManager.getConnection(DB_URL, USER, PASS);
+                System.out.println("Database connection established successfully.");
+            } catch (ClassNotFoundException e) {
+                System.err.println("Database Driver not found.");
+                e.printStackTrace();
+            } catch (SQLException e) {
+                System.err.println("Connection to database failed.");
+                throw e;
+            }
+        }
+        return connection;
+    }
+
+    // Method to close the database connection
+    public static void closeConnection() {
+        try {
+            if (connection != null && !connection.isClosed()) {
+                connection.close();
+                System.out.println("Database connection closed successfully.");
+            }
+        } catch (SQLException e) {
+            System.err.println("Error closing the database connection.");
+            e.printStackTrace();
+        }
+    }
+}
+
+//example
+public class MainApp {
+    public static void main(String[] args) {
+        try {
+            // Open connection
+            Connection conn = DatabaseConnectionDAO.getConnection();
+
+            // Perform database operations (e.g., CRUD operations)
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // Close connection
+            DatabaseConnectionDAO.closeConnection();
+        }
+    }
+}
