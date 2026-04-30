@@ -1,0 +1,25 @@
+# === Dependencies ===
+node_modules/
+.pnp/
+.pnp.js
+
+# === Build outputs ===
+frontend/dist/
+frontend/.vite/
+backend/target/
+
+# === IDE & OS ===
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db
+
+# === Environment ===
+.env
+.env.local
+.env.*.local
+
+# === Logs ===
+*.log
+npm-debug.log*
